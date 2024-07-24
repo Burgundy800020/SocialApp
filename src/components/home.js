@@ -1,14 +1,18 @@
 import {useState, useEffect} from "react";
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
+import { setLogin } from "../slices/userSlice";
 import '../styles/home.css';
 
-function Home(props) {
-  const {loggedIn, email, setLoggedIn} = props;
-  const navigate = useNavigate();
+function Home() {
+  const loggedIn = useSelector((state)=>state.user.loggedIn)
+  const email = useSelector((state)=>state.user.email)
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
   const toLogin = (e)=>{
     if(!loggedIn)navigate("/login");
     else {
-      setLoggedIn(false);
+      dispatch(setLogin({loggedIn:false}));
       sessionStorage.setItem("user", null);
     }
   };

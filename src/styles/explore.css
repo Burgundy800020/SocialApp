@@ -1,0 +1,12 @@
+.profile{
+    display:flex;
+    flex-direction: row;
+}
+
+.profileName{
+    font:1em
+}
+
+.requestMenu{
+    margin: 200px 400px 200px 400px
+}

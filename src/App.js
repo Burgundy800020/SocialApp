@@ -3,17 +3,23 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from './components/home'
 import Login from './components/login'
 import Signup from './components/signup'
+import Posts from "./components/posts"
+import Explore from "./components/explore"
+import Write from "./components/write"
+import MyPosts from "./components/myPosts"
+import Requests from "./components/requests"
 import  NavBar from './components/navBar'
+import { useDispatch } from "react-redux"
+import { setLogin, setEmail } from "./slices/userSlice"
 import './App.css'
 
+
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [email, setEmail] = useState("");
-  
+  const dispatch = useDispatch()
   useEffect(()=>{
-    const user = JSON.parse(sessionStorage.getItem("user"));
+    const user = JSON.parse(sessionStorage.getItem("user"))
     if(!user || !user.token){
-      setLoggedIn(false);
+      dispatch(setLogin({loggedIn: false}));
       return;
     }
     fetch("http://localhost:3080/api/verify", {
@@ -24,9 +30,10 @@ function App() {
     })
     .then((r)=>r.json())
     .then((r)=>{
-      setLoggedIn(r.message === 'success');
-      setEmail(user.email || '');
-      console.log("user.email: " + user.email);
+      if(r.message === "success"){
+        dispatch(setLogin({loggedIn:true}))
+        dispatch(setEmail({email: user.email}))
+      }
     })
   }, []);
   
@@ -35,13 +42,17 @@ function App() {
         <BrowserRouter>
           <NavBar/>     
           <Routes>
-            <Route path="/" element={<Home email={email} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>}/>
-            <Route path="/login" element={<Login setLoggedIn={setLoggedIn} setEmail={setEmail}/>}/>
-            <Route path="/signup" element={<Signup setLoggedIn={setLoggedIn} setEmail={setEmail}/>}/>
+            <Route path="/" element={<Home/>}/>
+            <Route path="/login" element={<Login />}/>
+            <Route path="/signup" element={<Signup/>}/>
+            <Route path="/posts" element={<Posts/>}/>
+            <Route path="/explore" element={<Explore/>}/>
+            <Route path="/write" element={<Write/>}/>
+            <Route path="/requests" element={<Requests/>}/>
+            <Route path="/myposts" element={<MyPosts/>}/>
           </Routes>
         </BrowserRouter>  
-      </div>
-    
+      </div> 
   )
 }
 

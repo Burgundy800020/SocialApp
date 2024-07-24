@@ -1,41 +1,38 @@
-import '../styles/signup.css';
 import {useState, useEffect} from "react";
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector  } from 'react-redux';
+import { addUser } from '../slices/userSlice';
 
-function Signup(props) {
+function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailErr, setEmailErr] = useState("");
   const [passwordErr, setPasswordErr] = useState("");
+  const loggedIn = useSelector((state)=>state.user.loggedIn)
+  const dispatch = useDispatch()
   const navigate = useNavigate();
   
-  function getSignup(){
-    fetch('http://localhost:3080/api/signup', {
-      method: 'POST',
-      headers:{
-        'Content-Type': 'application/json'
-      },
-      body:JSON.stringify({email, password})
-    })
-    .then((r)=>r.json())
-    .then((r) =>{
-      setEmailErr("")
-      setPasswordErr("")
-      console.log(r)
-      if(r.message === 'success'){
-        navigate("../")
-        return
-      }
-      else if(r.message === 'taken'){
-        setEmailErr("User with this email already exists")
-        return
-      }
-    })
+  async function getSignup(){
+    const r = await dispatch(addUser({email, password})).unwrap()
+    setEmailErr("")
+    setPasswordErr("")
+    if(r.message === 'success'){
+      navigate("../")
+      return
+    }
+    else if(r.message === 'taken'){
+      setEmailErr("User with this email already exists")
+      return
+    }
   }
   
   function onSignup(ev){
     setEmailErr("");
     setPasswordErr("");
+    if(loggedIn){
+      setEmailErr("Please log out first")
+      return
+    }
     if(email === ''){
       setEmailErr('Enter an email');
       return;

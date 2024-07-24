@@ -1,0 +1,32 @@
+.Write{
+    text-align: center;
+    width:100vw;
+    height:100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+  
+  .writeBox{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    width:500px;
+    font-size: 20px;
+    margin:30px 5px 5px 10px
+  }
+
+  textarea.postContent{
+    height: 200px;
+    text-align:start;
+    overflow-wrap: break-word;
+    hyphens: auto;
+  }
+  
+.confirmation{
+  font-size:0.5em;
+  color:green;
+}
+
+
+  

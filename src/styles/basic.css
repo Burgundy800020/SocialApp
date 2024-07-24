@@ -1,0 +1,13 @@
+.bottomLeft{
+    margin:5px 5px 5px 5px;
+    align-self: flex-start;
+  }
+  
+
+.rowFlex{
+    display:flex;
+    flex-direction: row;
+    gap:100px;
+    justify-content: center;
+    align-items: flex-start;
+}
