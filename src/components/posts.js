@@ -1,5 +1,5 @@
 import '../styles/posts.css';
-import {useState, useEffect, memo} from "react";
+import {useState, useEffect} from "react";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Post from "./widgets/post.js"
@@ -11,7 +11,6 @@ export default function Posts(){
     const [scroll, setScroll] = useState(0.0)
     const loggedIn = useSelector((state)=>state.user.loggedIn)
     const email = useSelector((state)=>state.user.email)
-    const dispatch = useDispatch()
     const navigate = useNavigate()
 
     async function fetchPosts(reqInfo){
@@ -47,8 +46,6 @@ export default function Posts(){
       <header className="App-header">
         Posts
       </header>
-      <div>{posts.length}</div>
-      <div>{scroll}</div>
       <div className='postsContainer'  onScroll={handleScroll}>
             {loggedIn? posts.map(x => {
                 return <Post author={x.author} date={x.date} content={x.content}/>

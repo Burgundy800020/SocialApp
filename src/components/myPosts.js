@@ -1,5 +1,5 @@
 import '../styles/posts.css';
-import {useState, useEffect, memo} from "react";
+import {useState, useEffect} from "react";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Post from "./widgets/post.js"

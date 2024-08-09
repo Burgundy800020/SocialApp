@@ -1,5 +1,5 @@
 import '../styles/write.css';
-import {useState, useEffect} from "react";
+import {useState} from "react";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setDraft } from '../slices/draftSlice';
@@ -52,8 +52,6 @@ export default function Write(){
         <label className='error'>{err}</label>
         <label className='confirmation'>{confirmation}</label>
       </div>
-      <div>{email}</div>
-      <div>{draft}</div>
       <div className='bottomLeft'>
         <input type="button" value="To home" onClick={()=>{navigate("../")}}></input>
       </div>

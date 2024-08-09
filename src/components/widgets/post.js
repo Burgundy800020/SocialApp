@@ -1,15 +1,16 @@
-import {useState, useEffect, memo} from "react";
-import "../../styles/posts.css"
+import {memo} from "react";
+import "../../styles/posts.css";
+import Latex from 'react-latex-next';
+import katex from "katex";
+import 'katex/dist/katex.min.css';
 
 function Post(props){
-    useEffect(()=>{
-        console.log("rendering tasks")
-    })
+    
     return(
         <article className='post inheritWidth'>
             <div className='author'>{props.author}</div>
             <div className='date'>{props.date}</div>
-            <div className='content'>{props.content}</div>
+            <div className='content'><Latex>{props.content}</Latex></div>
         </article>
     )
 }

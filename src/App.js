@@ -1,7 +1,7 @@
-import {useState, useEffect} from "react"
+import { useEffect} from "react"
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Home from './components/home'
-import Login from './components/login'
+import Home from './components/home';
+import Login from './components/login';
 import Signup from './components/signup'
 import Posts from "./components/posts"
 import Explore from "./components/explore"
@@ -12,29 +12,31 @@ import  NavBar from './components/navBar'
 import { useDispatch } from "react-redux"
 import { setLogin, setEmail } from "./slices/userSlice"
 import './App.css'
+import API from "./API"
 
 
 function App() {
-  const dispatch = useDispatch()
-  useEffect(()=>{
-    const user = JSON.parse(sessionStorage.getItem("user"))
+  const dispatch = useDispatch();
+  console.log("rendering app")
+
+  const init = async () =>{
+    const user = JSON.parse(sessionStorage.getItem("user"));
+
     if(!user || !user.token){
       dispatch(setLogin({loggedIn: false}));
       return;
     }
-    fetch("http://localhost:3080/api/verify", {
-      method : 'POST', 
-      headers:{
-        'jwt-token' : user.token
-      }
-    })
-    .then((r)=>r.json())
-    .then((r)=>{
-      if(r.message === "success"){
-        dispatch(setLogin({loggedIn:true}))
-        dispatch(setEmail({email: user.email}))
-      }
-    })
+
+    const res = await API.verifyUser(user.token);
+    if(res.message === "success"){
+      dispatch(setEmail({email: user.email}))
+      dispatch(setLogin({loggedIn: true}))
+    }
+    
+  }
+
+  useEffect(()=>{
+    init()
   }, []);
   
   return (
@@ -47,6 +49,7 @@ function App() {
             <Route path="/signup" element={<Signup/>}/>
             <Route path="/posts" element={<Posts/>}/>
             <Route path="/explore" element={<Explore/>}/>
+            <Route path="/explore/:userId" element={<Explore/>}/>
             <Route path="/write" element={<Write/>}/>
             <Route path="/requests" element={<Requests/>}/>
             <Route path="/myposts" element={<MyPosts/>}/>

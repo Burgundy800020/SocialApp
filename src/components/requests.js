@@ -1,6 +1,6 @@
 import '../styles/posts.css'
 import '../styles/explore.css'
-import {useState, useEffect, useMemo, memo} from "react";
+import {useState, useEffect} from "react";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import FollowRequest from "./widgets/followRequest.js"
