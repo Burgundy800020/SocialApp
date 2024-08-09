@@ -5,7 +5,7 @@ The MathConnect web app was developped to allow the members of any math club to 
 
 Sign up for an account and follow other users to see the problems they have posted. Write your own math problems (Latex is supported) and share them with your community. 
 
-This app was built using the MERN (MongoDb, Express, React, Node.js) stack.
+This app was built using the MERN (MongoDb, Express, React, Node.js) stack. The client side app also uses Redux to keep global states.
 
 ## Available Scripts
 
